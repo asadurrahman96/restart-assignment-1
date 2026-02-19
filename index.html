@@ -3,9 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>assignment 1</title>
+    <link rel="stylesheet" href="./styles/index.css">
+   <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body>
-    
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <nav class="bg-white/80 backdrop-blur-md border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
+            <div class="flex items-center gap-2 text-2xl font-bold text-blue-600">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span>SwiftCart</span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8 font-semibold text-slate-600">
+                <a href="#" class="hover:text-blue-600">Home</a>
+                <a href="#products" class="hover:text-blue-600">Product</a>
+                <a href="#products" class="hover:text-blue-600">About</a>
+                <a href="#" class="hover:text-blue-600">Contact</a>
+            </div>
+
+            <button class="relative p-3 bg-slate-100 rounded-full hover:bg-blue-100 transition group">
+                <i class="fa-solid fa-cart-shopping text-xl group-hover:text-blue-600"></i>
+                <span id="cart-count" class="absolute -top-1 -right-1 bg-blue-600 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-white">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <script src="./js/script.js"></script>
 </body>
 </html>
