@@ -6,6 +6,8 @@ const loadCategories = () => {
 };
 const loadProducts = (category) => {
     const url = `https://fakestoreapi.com/products/category/${category}`;
+
+ 
     
     fetch(url)
      .then(res => res.json())
@@ -14,6 +16,7 @@ const loadProducts = (category) => {
 
 const displayProducts = (products) => {
     const productsGrid = document.getElementById("products-grid");
+    
     productsGrid.innerHTML = "";
 
     products.forEach(product => {
@@ -37,7 +40,9 @@ const displayProducts = (products) => {
                         <p class="text-xl font-extrabold text-gray-900 mt-2">$${product.price}</p>
                     </div>
                     <div class="mt-4 grid grid-cols-2 gap-2">
-                        <button  class="text-xs font-bold border border-gray-200 py-2 rounded-lg hover:bg-gray-50 transition"> <i class="fa-regular fa-eye"></i> Details</button>
+                        <button onclick="loadProductDetail(${product.id})" class="text-xs font-bold border border-gray-200 py-2 rounded-lg hover:bg-gray-50 transition">
+                            <i class="fa-regular fa-eye"></i> Details
+                        </button>
                         <button  class="text-xs font-bold bg-violet-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">Add to Cart</button>
                     </div>
         
@@ -65,6 +70,44 @@ const displayCategories = (categories) => {
         categoryContainer.append(buttonDiv);
     });
 };
+
+const loadProductDetail = (id) => {
+    fetch(`https://fakestoreapi.com/products/${id}`)
+        .then(res => res.json())
+        .then(data => displayModal(data));
+}
+
+const displayModal = (product) => {
+    const modal = document.getElementById('product-modal');
+    const content = document.getElementById('modal-content');
+
+    content.innerHTML = `
+        <div class="flex items-center justify-center bg-gray-50 p-6 rounded-xl">
+            <img src="${product.image}" class="max-h-64 object-contain" />
+        </div>
+        <div class="space-y-4">
+            <span class="bg-blue-100 text-blue-600 text-xs font-bold px-3 py-1 rounded-full capitalize">${product.category}</span>
+            <h2 class="text-2xl font-bold text-gray-900 leading-tight">${product.title}</h2>
+            <div class="flex items-center gap-2">
+                <span class="text-yellow-500"><i class="fa-solid fa-star"></i> ${product.rating.rate}</span>
+                <span class="text-gray-400 text-sm">| ${product.rating.count} reviews</span>
+            </div>
+            <p class="text-gray-500 text-sm leading-relaxed">${product.description}</p>
+            <p class="text-3xl font-extrabold text-gray-900">$${product.price}</p>
+            <button class="w-full bg-violet-600 text-white py-3 rounded-xl font-bold hover:bg-violet-700 transition shadow-lg">
+                Buy Now
+            </button>
+        </div>
+    `;
+
+    modal.classList.remove('hidden');
+}
+
+
+const closeModal = () => {
+    document.getElementById('product-modal').classList.add('hidden');
+}
+
 
 loadProducts();
 loadCategories();
