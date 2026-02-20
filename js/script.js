@@ -37,8 +37,8 @@ const displayProducts = (products) => {
                         <p class="text-xl font-extrabold text-gray-900 mt-2">$${product.price}</p>
                     </div>
                     <div class="mt-4 grid grid-cols-2 gap-2">
-                        <button  class="text-xs font-bold border border-gray-200 py-2 rounded-lg hover:bg-gray-50 transition">Details</button>
-                        <button  class="text-xs font-bold bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">Add to Cart</button>
+                        <button  class="text-xs font-bold border border-gray-200 py-2 rounded-lg hover:bg-gray-50 transition"> <i class="fa-regular fa-eye"></i> Details</button>
+                        <button  class="text-xs font-bold bg-violet-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">Add to Cart</button>
                     </div>
         
         `;
@@ -53,7 +53,7 @@ const displayCategories = (categories) => {
     categories.forEach(category => {
         const buttonDiv = document.createElement("div");
         buttonDiv.innerHTML = `
-            <button class="cat-btn px-5 py-2 rounded-full border border-blue-600 text-blue-600 font-medium hover:bg-blue-600 hover:text-white transition capitalize">
+            <button class="cat-btn px-5 py-2 rounded-full border  font-medium hover:bg-violet-600 hover:text-white transition capitalize">
                 ${category}
             </button>
         `;
