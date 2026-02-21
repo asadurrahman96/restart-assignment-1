@@ -1,3 +1,72 @@
+
+let cart = [];
+let currentProducts = [];
+
+function loadCart() {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+        cart = JSON.parse(savedCart);
+    }
+    updateCartCount();
+    displayCart();
+}
+
+
+function updateCartCount() {
+    document.getElementById('cart-count').textContent = cart.length;
+}
+
+
+function addToCart(productId) {
+    const product = currentProducts.find(p => p.id === productId);
+    if (product) {
+        cart.push(product);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        displayCart();
+    }
+}
+
+function removeFromCart(i) {
+    cart.splice(i, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    displayCart();
+}
+
+
+function displayCart() {
+    const cartContainer = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    
+    if (cart.length === 0) {
+        cartContainer.innerHTML = '<p class="text-center text-gray-500 py-8">Your cart is empty</p>';
+        cartTotal.textContent = '$0.00';
+        return;
+    }
+    
+    let total = 0;
+    let cartArray = '';
+    
+    cart.forEach((item, i) => {
+        total += item.price;
+        cartArray += `
+            <div class="flex items-center justify-between p-3 border-b border-gray-200">
+                <div class="flex-1">
+                    <h4 class="text-sm font-bold line-clamp-2">${item.title}</h4>
+                    <p class="text-violet-600 font-bold">$${item.price.toFixed(2)}</p>
+                </div>
+                <button onclick="removeFromCart(${i})" class="ml-2 text-red-600 hover:text-red-800 font-bold">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </div>
+        `;
+    });
+    
+    cartContainer.innerHTML = cartArray;
+    cartTotal.textContent = '$' + total.toFixed(2);
+}
+
 const loadCategories = () => {
     fetch("https://fakestoreapi.com/products/categories")
     .then(res => res.json())
@@ -27,6 +96,7 @@ const manageSpinner = (status) =>{
 
 const displayProducts = (products) => {
     const productsGrid = document.getElementById("products-grid");
+    currentProducts = products; 
     
     productsGrid.innerHTML = "";
 
@@ -54,7 +124,7 @@ const displayProducts = (products) => {
                         <button onclick="loadProductDetail(${product.id})" class="text-xs font-bold border border-gray-200 py-2 rounded-lg hover:bg-gray-50 transition">
                             <i class="fa-regular fa-eye"></i> Details
                         </button>
-                        <button  class="text-xs font-bold bg-violet-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">Add to Cart</button>
+                        <button onclick="addToCart(${product.id})" class="text-xs font-bold bg-violet-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">Add to Cart</button>
                     </div>
         
         `;
@@ -130,3 +200,4 @@ const closeModal = () => {
 
 loadProducts();
 loadCategories();
+loadCart();
