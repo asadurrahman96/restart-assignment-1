@@ -5,6 +5,7 @@ const loadCategories = () => {
    
 };
 const loadProducts = (category) => {
+    manageSpinner(true);
     const url = `https://fakestoreapi.com/products/category/${category}`;
 
  
@@ -12,6 +13,16 @@ const loadProducts = (category) => {
     fetch(url)
      .then(res => res.json())
     .then(data => displayProducts(data))
+};
+
+const manageSpinner = (status) =>{
+    if(status==true){
+        document.querySelector('.spinner').parentElement.classList.remove('hidden');
+        document.getElementById("products-grid").classList.add('hidden');
+    } else {
+        document.querySelector('.spinner').parentElement.classList.add('hidden');
+        document.getElementById("products-grid").classList.remove('hidden');
+    }
 }
 
 const displayProducts = (products) => {
@@ -49,6 +60,7 @@ const displayProducts = (products) => {
         `;
         productsGrid.appendChild(productDiv);
     });
+    manageSpinner(false);
 }
 
 const displayCategories = (categories) => {
