@@ -70,12 +70,19 @@ const displayCategories = (categories) => {
     categories.forEach(category => {
         const buttonDiv = document.createElement("div");
         buttonDiv.innerHTML = `
-            <button class="cat-btn px-5 py-2 rounded-full border  font-medium hover:bg-violet-600 hover:text-white transition capitalize">
+            <button class="cat-btn px-5 py-2 rounded-full border border-gray-300 font-medium hover:bg-violet-600 hover:text-white transition capitalize">
                 ${category}
             </button>
         `;
         const btn = buttonDiv.querySelector('button');
         btn.addEventListener('click', () => {
+            const allButtons = document.querySelectorAll('.cat-btn');
+            allButtons.forEach(button => {
+                button.classList.remove('bg-violet-600', 'text-white');
+                button.classList.add('border-gray-300');
+            });
+            btn.classList.add('bg-violet-600', 'text-white');
+            btn.classList.remove('border-gray-300');
             loadProducts(category);
         });
 
